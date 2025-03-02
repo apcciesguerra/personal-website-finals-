@@ -19,7 +19,7 @@
         </p>
         <button type="submit" :disabled="isSubmitting">{{ isSubmitting ? 'SUBMITTING...' : 'SUBMIT' }}</button>
       </form>
-      <div v-if="submissionStatus" class="status-message">{{ submissionStatus }}</div>
+      <div v-if="submissionStatus" class="status-message" :class="{ error: isError }">{{ submissionStatus }}</div>
     </div>
   </template>
   
@@ -35,7 +35,8 @@
         suggestion: '',
         important: false,
         submissionStatus: '',
-        isSubmitting: false
+        isSubmitting: false,
+        isError: false
       }
     },
     methods: {
@@ -44,11 +45,15 @@
         
         this.isSubmitting = true;
         this.submissionStatus = 'Submitting...';
+        this.isError = false;
         
         try {
-          // First check if Supabase is connected
+          // Test connection before submitting
+          console.log('Testing connection to Supabase...');
           const connectionTest = await testSupabaseConnection();
+          
           if (!connectionTest.success) {
+            console.error('Connection test failed:', connectionTest.error);
             throw new Error(connectionTest.error || 'Database connection error');
           }
           
@@ -72,22 +77,42 @@
           }
           
           this.submissionStatus = 'Thank you for your suggestion!';
-          this.name = '';
-          this.suggestion = '';
-          this.important = false;
-          
-          // Clear status message after 3 seconds
-          setTimeout(() => {
-            this.submissionStatus = '';
-          }, 3000);
+          this.resetForm();
           
         } catch (error) {
           console.error('Error submitting suggestion:', error);
-          this.submissionStatus = `ERROR SUBMITTING SUGGESTION: ${error.message || 'Please try again.'}`;
+          this.isError = true;
+          this.submissionStatus = `ERROR SUBMITTING SUGGESTION: ${error.message || 'Unknown error'}`;
         } finally {
           this.isSubmitting = false;
+          
+          // Clear status message after 5 seconds
+          setTimeout(() => {
+            this.submissionStatus = '';
+          }, 5000);
         }
+      },
+      
+      resetForm() {
+        this.name = '';
+        this.suggestion = '';
+        this.important = false;
       }
     }
   }
   </script>
+  
+  <style scoped>
+  .status-message {
+    margin-top: 10px;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #e8f5e9;
+    color: #2e7d32;
+  }
+  
+  .status-message.error {
+    background-color: #ffebee;
+    color: #c62828;
+  }
+  </style>
