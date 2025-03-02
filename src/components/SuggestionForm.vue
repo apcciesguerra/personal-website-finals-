@@ -17,7 +17,7 @@
             <input type="checkbox" v-model="important">
           </label>
         </p>
-        <button type="submit">SUBMIT</button>
+        <button type="submit" :disabled="isSubmitting">{{ isSubmitting ? 'SUBMITTING...' : 'SUBMIT' }}</button>
       </form>
       <div v-if="submissionStatus" class="status-message">{{ submissionStatus }}</div>
     </div>
@@ -33,40 +33,61 @@
         name: '',
         suggestion: '',
         important: false,
-        submissionStatus: ''
+        submissionStatus: '',
+        isSubmitting: false
       }
     },
     methods: {
       async submitSuggestion() {
+        if (this.isSubmitting) return;
+        
+        this.isSubmitting = true;
+        this.submissionStatus = 'Submitting...';
+        
         try {
-          this.submissionStatus = 'Submitting...'
+          console.log('Supabase URL:', supabase.supabaseUrl);
+          console.log('Submitting to Supabase:', {
+            name: this.name,
+            suggestion: this.suggestion,
+            important: this.important
+          });
+          
+          // Test the connection first
+          const { error: pingError } = await supabase.from('suggestions').select('count', { count: 'exact', head: true });
+          
+          if (pingError) {
+            console.error('Connection test failed:', pingError);
+            throw new Error('Could not connect to database. Please check your internet connection.');
+          }
           
           const { error } = await supabase
             .from('suggestions')
-            .insert([
-              { 
-                name: this.name,
-                suggestion: this.suggestion,
-                important: this.important,
-                created_at: new Date()
-              }
-            ])
+            .insert({
+              name: this.name,
+              suggestion: this.suggestion,
+              important: this.important
+            });
           
-          if (error) throw error
+          if (error) {
+            console.error('Supabase error details:', error);
+            throw error;
+          }
           
-          this.submissionStatus = 'Thank you for your suggestion!'
-          this.name = ''
-          this.suggestion = ''
-          this.important = false
+          this.submissionStatus = 'Thank you for your suggestion!';
+          this.name = '';
+          this.suggestion = '';
+          this.important = false;
           
           // Clear status message after 3 seconds
           setTimeout(() => {
-            this.submissionStatus = ''
-          }, 3000)
+            this.submissionStatus = '';
+          }, 3000);
           
         } catch (error) {
-          console.error('Error submitting suggestion:', error)
-          this.submissionStatus = 'Error submitting suggestion. Please try again.'
+          console.error('Error submitting suggestion:', error);
+          this.submissionStatus = `ERROR SUBMITTING SUGGESTION: ${error.message || 'Please try again.'}`;
+        } finally {
+          this.isSubmitting = false;
         }
       }
     }
