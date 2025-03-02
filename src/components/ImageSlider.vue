@@ -16,7 +16,6 @@
           { src: require('@/assets/images/photo1.jpg') },
           { src: require('@/assets/images/photo2.jpg') },
           { src: require('@/assets/images/photo3.jpg') },
-          { src: require('@/assets/images/photo4.jpg') },
           { src: require('@/assets/images/photo5.jpg') },
           { src: require('@/assets/images/photo6.jpg') },
           { src: require('@/assets/images/photo7.jpg') }
