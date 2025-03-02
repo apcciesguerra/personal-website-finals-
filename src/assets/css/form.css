@@ -54,3 +54,14 @@
   #app3 button:hover {
     background: #c185ee; 
   }
+
+  /* Status message styling */
+  #app3 .status-message {
+    color: #662e92;
+    font-weight: bold;
+    margin-top: 15px;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+  }
