@@ -25,6 +25,7 @@
   
   <script>
   import { supabase } from '@/supabase'
+  import { testSupabaseConnection } from '@/supabaseTest'
   
   export default {
     name: 'SuggestionForm',
@@ -45,20 +46,17 @@
         this.submissionStatus = 'Submitting...';
         
         try {
-          console.log('Supabase URL:', supabase.supabaseUrl);
+          // First check if Supabase is connected
+          const connectionTest = await testSupabaseConnection();
+          if (!connectionTest.success) {
+            throw new Error(connectionTest.error || 'Database connection error');
+          }
+          
           console.log('Submitting to Supabase:', {
             name: this.name,
             suggestion: this.suggestion,
             important: this.important
           });
-          
-          // Test the connection first
-          const { error: pingError } = await supabase.from('suggestions').select('count', { count: 'exact', head: true });
-          
-          if (pingError) {
-            console.error('Connection test failed:', pingError);
-            throw new Error('Could not connect to database. Please check your internet connection.');
-          }
           
           const { error } = await supabase
             .from('suggestions')

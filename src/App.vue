@@ -88,8 +88,11 @@ export default {
   },
   async mounted() {
     // Test Supabase connection
-    const connectionSuccess = await testSupabaseConnection()
-    this.supabaseError = !connectionSuccess
+    const result = await testSupabaseConnection()
+    this.supabaseError = !result.success
+    if (!result.success) {
+      console.error('Supabase connection error:', result.error)
+    }
     
     // Set up scroll event listener
     window.addEventListener('scroll', this.handleScroll);

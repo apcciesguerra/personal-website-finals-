@@ -7,19 +7,27 @@ async function testSupabaseConnection() {
   console.log('Supabase URL:', supabase.supabaseUrl)
   
   try {
-    // Try to ping the database
-    const { data, error } = await supabase.from('suggestions').select('count', { count: 'exact', head: true })
+    // First, test basic connectivity
+    const { error: pingError } = await supabase.from('_pgrpc').select('*', { count: 'exact', head: true }).limit(1)
     
-    if (error) {
-      console.error('Connection test failed:', error)
-      return false
+    if (pingError) {
+      console.error('Basic connection test failed:', pingError)
+      return { success: false, error: 'Cannot connect to Supabase: ' + pingError.message }
+    }
+    
+    // Then, test if the suggestions table exists
+    const { error: tableError } = await supabase.from('suggestions').select('count', { count: 'exact', head: true })
+    
+    if (tableError) {
+      console.error('Table test failed:', tableError)
+      return { success: false, error: 'Table "suggestions" may not exist: ' + tableError.message }
     }
     
     console.log('Connection successful!')
-    return true
+    return { success: true }
   } catch (error) {
     console.error('Connection test error:', error)
-    return false
+    return { success: false, error: 'Unexpected error: ' + (error.message || 'Unknown error') }
   }
 }
 
