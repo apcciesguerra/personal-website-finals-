@@ -13,13 +13,13 @@
       return {
         currentSlide: 0,
         images: [
-          { src: 'https://github.com/apcciesguerra/webprog-vuejs/blob/main/images/photo1.jpg?raw=true' },
-          { src: 'https://github.com/apcciesguerra/webprog-vuejs/blob/main/images/photo2.jpg?raw=true' },
-          { src: 'https://github.com/apcciesguerra/webprog-vuejs/blob/main/images/photo3.jpg?raw=true' },
-          { src: 'https://github.com/apcciesguerra/webprog-vuejs/blob/main/images/photo4.jpg?raw=true' },
-          { src: 'https://github.com/apcciesguerra/webprog-vuejs/blob/main/images/photo5.jpg?raw=true' },
-          { src: 'https://github.com/apcciesguerra/webprog-vuejs/blob/main/images/photo6.jpg?raw=true' },
-          { src: 'https://github.com/apcciesguerra/webprog-vuejs/blob/main/images/photo7.jpg?raw=true' }
+          { src: require('@/assets/images/photo1.jpg') },
+          { src: require('@/assets/images/photo2.jpg') },
+          { src: require('@/assets/images/photo3.jpg') },
+          { src: require('@/assets/images/photo4.jpg') },
+          { src: require('@/assets/images/photo5.jpg') },
+          { src: require('@/assets/images/photo6.jpg') },
+          { src: require('@/assets/images/photo7.jpg') }
         ]
       }
     },
