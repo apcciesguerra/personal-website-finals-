@@ -4,16 +4,7 @@
       <slot></slot>
     </div>
     <div class="tracing-beam" ref="tracingBeam">
-      <div class="tracing-beam-gradient"></div>
-    </div>
-    <div class="tracing-beam-dots">
-      <div 
-        v-for="(_, index) in 7" 
-        :key="index" 
-        class="tracing-beam-dot"
-        :class="{ 'active': activeDot === index }"
-        :style="{ top: `${(index + 1) * 14}%` }"
-      ></div>
+      <div class="tracing-beam-gradient" ref="beamGradient"></div>
     </div>
   </div>
 </template>
@@ -23,9 +14,11 @@ export default {
   name: 'TracingBeam',
   data() {
     return {
-      activeDot: 0,
       sections: [],
-      observer: null
+      observer: null,
+      lastScrollPos: 0,
+      isScrolling: false,
+      scrollTimeout: null
     }
   },
   mounted() {
@@ -42,6 +35,9 @@ export default {
     if (this.observer) {
       this.observer.disconnect();
     }
+    if (this.scrollTimeout) {
+      clearTimeout(this.scrollTimeout);
+    }
   },
   methods: {
     setupTracingBeam() {
@@ -56,12 +52,8 @@ export default {
       this.observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            // Find the index of the section
-            const index = this.sections.indexOf(entry.target);
-            if (index !== -1) {
-              // Map the section index to a dot index (max 7 dots)
-              this.activeDot = Math.min(Math.floor(index * 7 / this.sections.length), 6);
-            }
+            // Enhance beam glow when a new section comes into view
+            this.pulseBeamGlow();
           }
         });
       }, {
@@ -76,7 +68,8 @@ export default {
     },
     handleScroll() {
       const tracingBeam = this.$refs.tracingBeam;
-      if (!tracingBeam) return;
+      const beamGradient = this.$refs.beamGradient;
+      if (!tracingBeam || !beamGradient) return;
 
       // Calculate scroll progress (0 to 1)
       const scrollTop = window.scrollY;
@@ -89,8 +82,38 @@ export default {
 
       // Update gradient position for a more dynamic effect
       const gradientPos = Math.min(scrollProgress * 200, 100);
-      const beamGradient = tracingBeam.querySelector('.tracing-beam-gradient');
       beamGradient.style.top = `${gradientPos}%`;
+
+      // Detect scroll speed
+      const scrollSpeed = Math.abs(scrollTop - this.lastScrollPos);
+      this.lastScrollPos = scrollTop;
+
+      // Add active class when scrolling
+      if (scrollSpeed > 5) {
+        this.isScrolling = true;
+        beamGradient.classList.add('active');
+        
+        // Clear any existing timeout
+        if (this.scrollTimeout) {
+          clearTimeout(this.scrollTimeout);
+        }
+        
+        // Set timeout to remove active class after scrolling stops
+        this.scrollTimeout = setTimeout(() => {
+          this.isScrolling = false;
+          beamGradient.classList.remove('active');
+        }, 1000);
+      }
+    },
+    pulseBeamGlow() {
+      const beamGradient = this.$refs.beamGradient;
+      if (!beamGradient) return;
+      
+      // Add and remove pulse class to trigger animation
+      beamGradient.classList.add('pulse');
+      setTimeout(() => {
+        beamGradient.classList.remove('pulse');
+      }, 1000);
     }
   }
 }
@@ -135,37 +158,21 @@ export default {
     rgba(196, 181, 253, 0)
   );
   filter: blur(4px);
-  animation: pulse 4s ease-in-out infinite;
+  animation: subtle-pulse 4s ease-in-out infinite;
   transform: translateY(-30%);
+  transition: filter 0.5s ease, opacity 0.5s ease;
 }
 
-.tracing-beam-dots {
-  position: fixed;
-  top: 0;
-  left: 5%;
-  height: 100%;
-  width: 4px;
-  z-index: 6;
-  pointer-events: none;
+.tracing-beam-gradient.active {
+  filter: blur(6px) brightness(1.5);
+  animation: active-pulse 1.5s ease-in-out infinite;
 }
 
-.tracing-beam-dot {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  transform: translateX(-4px);
-  transition: all 0.5s ease;
+.tracing-beam-gradient.pulse {
+  animation: intense-pulse 1s ease-out;
 }
 
-.tracing-beam-dot.active {
-  background: rgba(139, 92, 246, 0.9);
-  box-shadow: 0 0 10px rgba(139, 92, 246, 0.7);
-  transform: translateX(-4px) scale(1.2);
-}
-
-@keyframes pulse {
+@keyframes subtle-pulse {
   0%, 100% {
     opacity: 0.8;
   }
@@ -174,8 +181,30 @@ export default {
   }
 }
 
+@keyframes active-pulse {
+  0%, 100% {
+    opacity: 0.9;
+    filter: blur(6px) brightness(1.5);
+  }
+  50% {
+    opacity: 0.7;
+    filter: blur(4px) brightness(1.2);
+  }
+}
+
+@keyframes intense-pulse {
+  0% {
+    opacity: 1;
+    filter: blur(8px) brightness(2);
+  }
+  100% {
+    opacity: 0.8;
+    filter: blur(4px) brightness(1.5);
+  }
+}
+
 @media (max-width: 768px) {
-  .tracing-beam, .tracing-beam-dots {
+  .tracing-beam {
     left: 2%;
   }
 }
