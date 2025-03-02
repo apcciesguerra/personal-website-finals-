@@ -27,11 +27,6 @@
       </div>
 
       <suggestion-form></suggestion-form>
-      
-      <!-- Supabase connection status -->
-      <div v-if="supabaseError" class="supabase-error">
-        Database connection error. Some features may not work properly.
-      </div>
 
       <footer>© Asia Pacific College 2025</footer>
     </div>
@@ -41,7 +36,6 @@
 <script>
 import ImageSlider from './components/ImageSlider.vue'
 import SuggestionForm from './components/SuggestionForm.vue'
-import { testSupabaseConnection } from './supabaseTest'
 
 export default {
   name: 'App',
@@ -52,7 +46,6 @@ export default {
   data() {
     return {
       scrolled: false,
-      supabaseError: false,
       cards: [
         {
           title: "About Me",
@@ -86,19 +79,7 @@ export default {
       ]
     }
   },
-  async mounted() {
-    // Test Supabase connection
-    try {
-      const result = await testSupabaseConnection()
-      this.supabaseError = !result.success
-      if (!result.success) {
-        console.error('Supabase connection error:', result.error)
-      }
-    } catch (error) {
-      console.error('Error testing Supabase connection:', error)
-      this.supabaseError = true
-    }
-    
+  mounted() {
     // Set up scroll event listener
     window.addEventListener('scroll', this.handleScroll);
     
