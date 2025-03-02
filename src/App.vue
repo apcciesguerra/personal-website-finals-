@@ -1,36 +1,38 @@
 <template>
   <div id="app">
     <aurora-background>
-      <!-- Splash Screen -->
-      <div class="splash-screen">
-        <div class="welcome-container">
-          <h1 class="welcome-text" :class="{ 'scrolled': scrolled }">WELCOME TO MY WEBPAGE</h1>
-        </div>
-      </div>
-
-      <!-- Main Content -->
-      <div class="main-content">
-        <div class="container">
-          <header>
-            <h1>Christian Luis Esguerra<br>
-                ComSci Student</h1>
-          </header>
-          <main>
-            <section class="main-content">
-              <!-- About Me Card -->
-              <div class="card" v-for="(card, index) in cards" :key="index" ref="cards">
-                <strong>{{ card.title }}</strong>
-                <p v-if="card.content">{{ card.content }}</p>
-                <image-slider v-if="card.hasGallery"></image-slider>
-              </div>
-            </section>
-          </main>
+      <tracing-beam>
+        <!-- Splash Screen -->
+        <div class="splash-screen">
+          <div class="welcome-container">
+            <h1 class="welcome-text" :class="{ 'scrolled': scrolled }">WELCOME TO MY WEBPAGE</h1>
+          </div>
         </div>
 
-        <suggestion-form></suggestion-form>
+        <!-- Main Content -->
+        <div class="main-content">
+          <div class="container">
+            <header>
+              <h1>Christian Luis Esguerra<br>
+                  ComSci Student</h1>
+            </header>
+            <main>
+              <section class="main-content">
+                <!-- About Me Card -->
+                <div class="card" v-for="(card, index) in cards" :key="index" ref="cards">
+                  <strong>{{ card.title }}</strong>
+                  <p v-if="card.content">{{ card.content }}</p>
+                  <image-slider v-if="card.hasGallery"></image-slider>
+                </div>
+              </section>
+            </main>
+          </div>
 
-        <footer>© Asia Pacific College 2025</footer>
-      </div>
+          <suggestion-form></suggestion-form>
+
+          <footer>© Asia Pacific College 2025</footer>
+        </div>
+      </tracing-beam>
     </aurora-background>
   </div>
 </template>
@@ -39,13 +41,15 @@
 import ImageSlider from './components/ImageSlider.vue'
 import SuggestionForm from './components/SuggestionForm.vue'
 import AuroraBackground from './components/ui/AuroraBackground.vue'
+import TracingBeam from './components/ui/TracingBeam.vue'
 
 export default {
   name: 'App',
   components: {
     ImageSlider,
     SuggestionForm,
-    AuroraBackground
+    AuroraBackground,
+    TracingBeam
   },
   data() {
     return {
