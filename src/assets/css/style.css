@@ -2,7 +2,6 @@
 
 /* General Background Stuff */
 body {
-  background: #121212; /* webpage bg color */
   color: white; /* webpage font color */
   font-family: "Funnel Sans", serif;
   font-weight: 400;
@@ -18,7 +17,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to bottom, #333, #121212);
 }
 
 .welcome-container {
@@ -33,6 +31,7 @@ body {
   opacity: 0;
   transform: translateY(-20px);
   animation: fadeIn 2s forwards;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 /* Fade Out Effect */
@@ -69,17 +68,17 @@ header h1 {
   text-align: center;
   margin-top: 70px;
   margin-bottom: 180px;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
 }
 
 strong {
   font-size: 30px;
   text-transform: uppercase;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 p {
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
   font-size: 1.5rem;
 }
 
@@ -89,6 +88,7 @@ html {
 
 footer {
   margin-bottom: 25px;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
 }
 
 /* Picture Gallery Button Styling */
@@ -99,14 +99,17 @@ footer {
   margin: 10px 0;
   border-radius: 5px;
   border: none;
-  background: white; 
+  background: rgba(255, 255, 255, 0.8); 
   color: black; /* Dark text for contrast */
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
 }
 
 .slider-button:hover {
-  background: #c185ee; 
+  background: rgba(193, 133, 238, 0.8);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(193, 133, 238, 0.4);
 }
 
 .slider img {
@@ -114,6 +117,8 @@ footer {
   height: auto;
   display: block;
   margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Supabase connection error message */
@@ -126,4 +131,5 @@ footer {
   text-align: center;
   max-width: 600px;
   font-weight: bold;
+  backdrop-filter: blur(5px);
 }
