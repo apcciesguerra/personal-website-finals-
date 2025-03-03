@@ -5,12 +5,16 @@
         <p>
           ANY SUGGESTIONS FOR MY WEBSITE?
         </p>
+        <IInput>
         <p>
           <input type="text" required placeholder="Name" v-model="name">
         </p>
+        </IInput>
+        <IInput>
         <p>
           <input type="text" required placeholder="Input here!" v-model="suggestion">
         </p>
+        </IInput>
         <p>
           CONFIRM
           <label>

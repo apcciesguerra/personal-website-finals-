@@ -1,124 +1,75 @@
 <template>
-  <div class="aurora-container">
-    <div class="aurora-overlay">
-      <div 
-        v-for="(_, i) in Array(5)" 
-        :key="i" 
-        :class="[
-          'aurora-blob',
-          `aurora-blob-${i + 1}`
-        ]"
-      ></div>
+  <main>
+    <div
+      v-bind="props"
+      :class="
+        cn(
+          'relative flex flex-col h-[100vh] items-center justify-center bg-zinc-50 dark:bg-zinc-900 text-slate-950 transition-bg',
+          props.class,
+        )
+      "
+    >
+      <div class="absolute inset-0 overflow-hidden">
+        <div
+          :class="
+            cn(
+              'filter blur-[10px] invert dark:invert-0 pointer-events-none absolute -inset-[10px] opacity-50 will-change-transform;',
+              '[--white-gradient:repeating-linear-gradient(100deg,var(--white)_0%,var(--white)_7%,var(--transparent)_10%,var(--transparent)_12%,var(--white)_16%)]',
+              '[--dark-gradient:repeating-linear-gradient(100deg,var(--black)_0%,var(--black)_7%,var(--transparent)_10%,var(--transparent)_12%,var(--black)_16%)]',
+              '[--aurora:repeating-linear-gradient(100deg,var(--blue-500)_10%,var(--indigo-300)_15%,var(--blue-300)_20%,var(--violet-200)_25%,var(--blue-400)_30%)]',
+              '[background-image:var(--white-gradient),var(--aurora)] dark:[background-image:var(--dark-gradient),var(--aurora)] [background-size:300%,_200%] [background-position:50%_50%,50%_50%]',
+              'aurora-background-gradient-after',
+              'aurora-gradient-animation',
+              props.radialGradient &&
+                `[mask-image:radial-gradient(ellipse_at_100%_0%,black_10%,var(--transparent)_70%)]`,
+            )
+          "
+        ></div>
+      </div>
+      <slot />
     </div>
-    <div class="aurora-content">
-      <slot></slot>
-    </div>
-  </div>
+  </main>
 </template>
 
-<script>
-export default {
-  name: 'AuroraBackground'
+<script setup lang="ts">
+import { cn } from "@/lib/utils";
+
+interface AuroraBackgroundProps {
+  radialGradient?: boolean;
+  class?: string;
 }
+
+const props = withDefaults(defineProps<AuroraBackgroundProps>(), {
+  radialGradient: true,
+});
 </script>
 
 <style scoped>
-.aurora-container {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-  background-color: #0f172a;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
+.aurora-background-gradient-after {
+  @apply after:content-[""] 
+          after:absolute 
+          after:inset-0 
+          after:[background-image:var(--white-gradient),var(--aurora)]
+          after:dark:[background-image:var(--dark-gradient),var(--aurora)]
+          after:[background-size:200%,_100%]
+          after:[background-attachment:fixed] 
+          after:mix-blend-difference;
 }
 
-.aurora-overlay {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
+.aurora-gradient-animation::after {
+  animation: animate-aurora 60s linear infinite;
 }
 
-.aurora-content {
-  position: relative;
-  z-index: 10;
-  width: 100%;
-}
-
-.aurora-blob {
-  position: absolute;
-  height: 300px;
-  width: 300px;
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  filter: blur(80px);
-  opacity: 0.7;
-  animation: move 25s linear infinite;
-  transform-origin: center;
-}
-
-.aurora-blob-1 {
-  background: linear-gradient(to right, #4f46e5, #06b6d4);
-  left: 0%;
-  top: 10%;
-  height: 400px;
-  width: 400px;
-  animation-delay: -2s;
-}
-
-.aurora-blob-2 {
-  background: linear-gradient(to right, #8b5cf6, #d946ef);
-  right: 0%;
-  top: 20%;
-  height: 350px;
-  width: 350px;
-  animation-delay: -5s;
-}
-
-.aurora-blob-3 {
-  background: linear-gradient(to right, #ec4899, #f43f5e);
-  left: 20%;
-  bottom: 20%;
-  height: 300px;
-  width: 300px;
-  animation-delay: -8s;
-}
-
-.aurora-blob-4 {
-  background: linear-gradient(to right, #14b8a6, #84cc16);
-  right: 20%;
-  bottom: 10%;
-  height: 450px;
-  width: 450px;
-  animation-delay: -11s;
-}
-
-.aurora-blob-5 {
-  background: linear-gradient(to right, #f97316, #eab308);
-  left: 40%;
-  top: 40%;
-  height: 500px;
-  width: 500px;
-  animation-delay: -14s;
-}
-
-@keyframes move {
+@keyframes animate-aurora {
   0% {
-    transform: translate(0, 0) rotate(0deg) scale(1);
-  }
-  25% {
-    transform: translate(10%, 10%) rotate(90deg) scale(1.1);
-  }
-  50% {
-    transform: translate(5%, -5%) rotate(180deg) scale(1);
-  }
-  75% {
-    transform: translate(-10%, 5%) rotate(270deg) scale(0.9);
+    background-position:
+      50% 50%,
+      50% 50%;
   }
   100% {
-    transform: translate(0, 0) rotate(360deg) scale(1);
+    background-position:
+      350% 50%,
+      350% 50%;
   }
 }
 </style>
