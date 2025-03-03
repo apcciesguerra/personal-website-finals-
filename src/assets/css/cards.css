@@ -1,0 +1,74 @@
+/* Cards Styling */
+.card {
+    background: rgba(30, 30, 40, 0.5); /* Semi-transparent dark background */
+    color: white; 
+    text-align: center;
+    padding: 30px;
+    margin: 25px 0; /* Space between each card */
+    border-radius: 16px; /* Rounded corners */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); /* Subtle depth effect */
+    width: 65%;
+    max-width: 1200px; /* Limit width */
+    transition: all 0.6s ease; /* Smooth transitions */
+    opacity: 0; /* Initially hidden */
+    position: relative;
+    transform: translateY(50px); /* Slight downward offset */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+  
+.card.show {
+    opacity: 1; /* Fully visible */
+    transform: translateY(0); /* Move to its final position */
+}
+  
+/* Cards Glow Effect */
+.card:hover {
+    box-shadow: 0 0 25px rgba(102, 46, 149, 0.6); /* Glowing border */
+    background: rgba(68, 42, 88, 0.6); /* background */
+    transform: translateY(-5px) scale(1.02);
+}
+
+/* Tracing Beam Interaction */
+.card:target, .card:focus-within {
+    border-color: rgba(139, 92, 246, 0.5);
+    box-shadow: 0 0 30px rgba(139, 92, 246, 0.4);
+}
+
+/* Add a subtle pulse animation to cards when they're in view */
+@keyframes card-pulse {
+    0%, 100% {
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    50% {
+        border-color: rgba(139, 92, 246, 0.3);
+    }
+}
+
+.card:nth-child(odd) {
+    animation: card-pulse 4s ease-in-out infinite;
+    animation-delay: 0.5s;
+}
+
+.card:nth-child(even) {
+    animation: card-pulse 4s ease-in-out infinite;
+    animation-delay: 2.5s;
+}
+
+/* Add a subtle glow to the left side of cards to match the tracing beam */
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -5px;
+    width: 10px;
+    height: 100%;
+    background: linear-gradient(to right, rgba(139, 92, 246, 0.3), transparent);
+    border-radius: 16px 0 0 16px;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+
+.card:hover::before {
+    opacity: 1;
+}

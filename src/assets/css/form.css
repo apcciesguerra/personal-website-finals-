@@ -1,0 +1,90 @@
+#app3 {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    text-transform: uppercase; /* Uppercase text */
+  }
+  
+  /* Form Styling */
+  #app3 label, #app3 li {
+    padding: 5px; /* Adds padding inside each label and list item */
+    border-radius: 5px; /* Rounds the corners of each label and list item */
+  }
+  #app3 label:hover, #app3 li:hover {
+    cursor: pointer; /* Changes the cursor to a pointer when hovering over labels and list items */
+  }
+  
+  /* Form Styling */
+  #app3 form {
+    background: rgba(30, 30, 40, 0.5); /* Semi-transparent dark background */
+    color: #a67fde; /* font color */
+    font-weight: 700; /* Bold font */
+    align-items: center;
+    justify-content: center; 
+    text-align: center;
+    margin: 60px 0;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); /* Depth effect */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.6s ease;
+  }
+  
+  #app3 form:hover {
+    box-shadow: 0 0 25px rgba(102, 46, 149, 0.6);
+    transform: translateY(-5px);
+  }
+  
+  #app3 input, #app3 button {
+    font-family: "Funnel Sans", sans-serif; 
+    font-size: 1.2rem;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: none;
+  }
+  
+  #app3 input[type="text"] {
+    text-transform: none; /* Exclude input text from being uppercase */
+    width: 100%; /* Adjust width as needed */
+    padding: 12px; /* Adjust padding as needed */
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  #app3 input[type="text"]:focus {
+    outline: none;
+    box-shadow: 0 0 15px rgba(166, 127, 222, 0.5);
+    background: white;
+  }
+  
+  #app3 button {
+    background: rgba(255, 255, 255, 0.8); 
+    color: black; /* Dark text for contrast */
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(5px);
+  }
+  
+  #app3 button:hover {
+    background: rgba(193, 133, 238, 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(193, 133, 238, 0.4);
+  }
+
+  /* Status message styling */
+  #app3 .status-message {
+    color: #a67fde;
+    font-weight: bold;
+    margin-top: 15px;
+    background: rgba(30, 30, 40, 0.5);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
