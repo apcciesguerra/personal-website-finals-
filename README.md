@@ -1,6 +1,6 @@
 # Personal Website - Vue.js with Vite
 
-This is a personal website project built with Vue.js and Vite, featuruing Supabase integration for backend functionality.
+This is a personal website project built with Vue.js and Vite, featuring Supabase integration for backend functionality.
 
 ## Technologies Used
 
