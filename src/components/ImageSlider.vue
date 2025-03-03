@@ -17,33 +17,33 @@ export default {
       galleryImages: [
         { 
           src: '/src/assets/images/photo1.jpg',
-          title: 'Nature View',
-          description: 'A beautiful landscape scene'
+          title: 'Vacation',
+          description: 'Went to Baguio after a long time'
         },
         { 
           src: '/src/assets/images/photo2.jpg',
-          title: 'Urban Life',
-          description: 'City scenes and architecture'
+          title: 'Vacation #2',
+          description: 'First time going to Boracay'
         },
         { 
           src: '/src/assets/images/photo3.jpg',
-          title: 'Adventure',
-          description: 'Exploring new places'
+          title: 'Birthday',
+          description: 'Celebrating my 18th Birthday'
         },
         { 
           src: '/src/assets/images/photo5.jpg',
-          title: 'Relaxation',
-          description: 'Peaceful moments'
+          title: 'Family',
+          description: 'Old Family Photo with my entire family'
         },
         { 
           src: '/src/assets/images/photo6.jpg',
           title: 'Memories',
-          description: 'Capturing special moments'
+          description: 'Photo of young me that I cant remember'
         },
         { 
           src: '/src/assets/images/photo7.jpg',
-          title: 'Inspiration',
-          description: 'Finding beauty in everyday life'
+          title: 'Spider-man',
+          description: 'THWIP-THWIP!'
         }
       ]
     }
