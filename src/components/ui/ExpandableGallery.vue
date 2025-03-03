@@ -95,6 +95,10 @@ export default {
   transform: translateY(100%);
   transition: transform 0.6s cubic-bezier(0.33, 1, 0.68, 1);
   z-index: 2;
+  text-align: center; /* Center the text horizontally */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items vertically within the content div */
 }
 
 .gallery-item:hover .gallery-item-content {
@@ -110,6 +114,8 @@ export default {
   transform: translateY(20px);
   transition: opacity 0.6s ease, transform 0.6s ease;
   transition-delay: 0.1s;
+  width: 100%; /* Ensure the title takes full width */
+  text-align: center; /* Center the title text */
 }
 
 .gallery-item-content p {
@@ -120,6 +126,8 @@ export default {
   transition-delay: 0.2s;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
   max-width: 90%;
+  text-align: center; /* Center the description text */
+  margin: 0 auto; /* Center the paragraph horizontally */
 }
 
 .gallery-item:hover .gallery-item-content h3,
