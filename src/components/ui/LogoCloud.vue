@@ -74,6 +74,8 @@ export default {
     },
     initializePositions() {
       const container = this.$refs.container;
+      if (!container) return;
+      
       this.containerWidth = container.clientWidth;
       this.containerHeight = container.clientHeight;
       
@@ -92,6 +94,8 @@ export default {
     },
     handleResize() {
       const container = this.$refs.container;
+      if (!container) return;
+      
       const newWidth = container.clientWidth;
       const newHeight = container.clientHeight;
       
@@ -105,7 +109,10 @@ export default {
       this.containerHeight = newHeight;
     },
     handleMouseMove(event) {
-      const rect = this.$refs.container.getBoundingClientRect();
+      const container = this.$refs.container;
+      if (!container) return;
+      
+      const rect = container.getBoundingClientRect();
       this.mouseX = event.clientX - rect.left;
       this.mouseY = event.clientY - rect.top;
     },

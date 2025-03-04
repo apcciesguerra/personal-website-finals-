@@ -100,6 +100,8 @@ export default {
     },
     updateContainerDimensions() {
       const container = this.$refs.container;
+      if (!container) return; // Add null check
+      
       this.containerWidth = container.clientWidth;
       this.containerHeight = container.clientHeight;
       
@@ -121,7 +123,10 @@ export default {
       };
     },
     handleMouseMove(event) {
-      const rect = this.$refs.container.getBoundingClientRect();
+      const container = this.$refs.container;
+      if (!container) return; // Add null check
+      
+      const rect = container.getBoundingClientRect();
       this.mouseX = event.clientX - rect.left;
       this.mouseY = event.clientY - rect.top;
     },

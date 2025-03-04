@@ -30,7 +30,7 @@
             <main>
               <section class="main-content">
                 <!-- About Me Card -->
-                <div class="card about-me-card" ref="cards">
+                <section class="content-section" ref="sections">
                   <strong>About Me</strong>
                   <p>
                     <text-highlight color="rgba(139, 92, 246, 0.2)" activeColor="rgba(139, 92, 246, 0.4)">
@@ -39,28 +39,28 @@
                     a 2nd year Computer Science student from Asia Pacific College,<br>
                     from section SS231.
                   </p>
-                </div>
+                </section>
 
                 <!-- Education Card -->
-                <div class="card" ref="cards">
+                <section class="content-section" ref="sections">
                   <strong>Education / Achievements</strong>
                   <p>
                     Graduated Junior High School from Espiritu Santo Parochial School.<br>
                     Graduated Senior High School from Asia Pacific College.
                   </p>
-                </div>
+                </section>
 
                 <!-- Course Card -->
-                <div class="card" ref="cards">
+                <section class="content-section" ref="sections">
                   <strong>Course</strong>
                   <p>BS Computer Science</p>
                   <div class="orbit-container">
                     <OrbitComponent :items="orbitItems" :radius="120" :speed="25" />
                   </div>
-                </div>
+                </section>
 
                 <!-- IT Experience Card -->
-                <div class="card" ref="cards">
+                <section class="content-section" ref="sections">
                   <strong>IT Experience</strong>
                   <p>
                     <text-highlight color="rgba(139, 92, 246, 0.2)" activeColor="rgba(139, 92, 246, 0.4)">
@@ -70,10 +70,10 @@
                   <div class="logo-cloud-container">
                     <LogoCloudComponent :logos="techLogos" :speed="0.8" :density="1.2" />
                   </div>
-                </div>
+                </section>
 
                 <!-- Hobbies Card -->
-                <div class="card" ref="cards">
+                <section class="content-section" ref="sections">
                   <strong>Hobbies & Interests</strong>
                   <p>Going to the gym and playing video games</p>
                   <div class="stats-container">
@@ -90,10 +90,10 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </section>
 
                 <!-- Goals Card -->
-                <div class="card" ref="cards">
+                <section class="content-section" ref="sections">
                   <strong>Goals In Life / Dream</strong>
                   <p>
                     <text-highlight color="rgba(139, 92, 246, 0.2)" activeColor="rgba(139, 92, 246, 0.4)">
@@ -101,13 +101,13 @@
                     </text-highlight><br>
                     I like to only have short-term goals as it's easier for me to focus that way
                   </p>
-                </div>
+                </section>
 
                 <!-- Gallery Card -->
-                <div class="card" ref="cards">
+                <section class="content-section" ref="sections">
                   <strong>Picture Gallery</strong>
                   <image-slider></image-slider>
-                </div>
+                </section>
               </section>
             </main>
           </div>
@@ -157,8 +157,8 @@ export default {
     // Set up scroll event listener
     window.addEventListener('scroll', this.handleScroll);
     
-    // Set up intersection observer for cards
-    this.setupCardObserver();
+    // Set up intersection observer for sections
+    this.setupSectionObserver();
   },
   beforeUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
@@ -168,7 +168,7 @@ export default {
       const scrollThreshold = window.innerHeight / 2;
       this.scrolled = window.scrollY > scrollThreshold;
     },
-    setupCardObserver() {
+    setupSectionObserver() {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
@@ -181,8 +181,8 @@ export default {
         threshold: 0.1
       });
 
-      this.$refs.cards.forEach(card => {
-        observer.observe(card);
+      this.$refs.sections.forEach(section => {
+        observer.observe(section);
       });
     }
   }
@@ -191,7 +191,6 @@ export default {
 
 <style>
 @import './assets/css/style.css';
-@import './assets/css/cards.css';
 @import './assets/css/form.css';
 
 #app {
@@ -301,6 +300,72 @@ export default {
   
   .orbit-container {
     height: 250px;
+  }
+}
+
+/* Content section styling (replacing cards) */
+.content-section {
+  color: white; 
+  text-align: center;
+  padding: 30px;
+  margin: 25px 0; /* Space between each section */
+  width: 65%;
+  max-width: 1200px; /* Limit width */
+  transition: all 0.6s ease; /* Smooth transitions */
+  opacity: 0; /* Initially hidden */
+  position: relative;
+  transform: translateY(50px); /* Slight downward offset */
+}
+
+.content-section strong {
+  display: block;
+  margin-bottom: 15px;
+}
+
+.orbit-container, .logo-cloud-container {
+  margin-top: 30px;
+  height: 300px;
+  width: 100%;
+  position: relative;
+}
+
+.stats-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+.stat-item {
+  margin: 15px;
+  text-align: center;
+}
+
+.stat-label {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  opacity: 0.8;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .content-section {
+    width: 85%;
+    padding: 20px;
+  }
+  
+  .welcome-text {
+    font-size: 3rem !important;
+  }
+  
+  header h1 {
+    font-size: 2rem !important;
+    margin-bottom: 100px !important;
   }
 }
 </style>
