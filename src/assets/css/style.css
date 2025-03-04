@@ -7,8 +7,9 @@ body {
   font-weight: 400;
   margin: 0;
   padding: 0;
-  height: auto;
+  height: 100%;
   overflow-x: hidden; /* Prevents horizontal scrolling */
+  background-color: #121212; /* Dark background as fallback */
 }
 
 /* Splash Screen: Takes up the entire viewport initially */
@@ -136,6 +137,9 @@ p {
 
 html {
   scroll-behavior: smooth; /* Smooth scrolling effect */
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 footer {

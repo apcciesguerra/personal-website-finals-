@@ -86,6 +86,8 @@
   </template>
   
   <script setup lang="ts">
+  import { ref, onMounted, onBeforeUnmount, watch, defineEmits, defineProps, withDefaults, defineModel } from 'vue';
+  
   // Define interfaces for props and data structures
   interface Props {
     placeholders: string[];
@@ -107,8 +109,8 @@
   const emit = defineEmits(["submit", "change"]);
   
   // template refs
-  const canvasRef = templateRef<HTMLCanvasElement>("canvasRef");
-  const inputRef = templateRef<HTMLInputElement>("inputRef");
+  const canvasRef = ref<HTMLCanvasElement | null>(null);
+  const inputRef = ref<HTMLInputElement | null>(null);
   
   // normal refs
   const currentPlaceholder = ref<number>(0);
@@ -124,7 +126,8 @@
   
   // Focus on input when mounted
   onMounted(() => {
-    inputRef.value.focus();
+    changePlaceholder();
+    document.addEventListener("visibilitychange", handleVisibilityChange);
   });
   
   function changePlaceholder(): void {
@@ -218,7 +221,7 @@
         animating.value = false;
         setTimeout(() => {
           // regain focus after animation
-          inputRef.value.focus();
+          inputRef.value?.focus();
         }, 100);
       }
     });
@@ -249,11 +252,6 @@
     if (!animating.value) {
       emit("change", { target: { value: newVal } });
     }
-  });
-  
-  onMounted(() => {
-    changePlaceholder();
-    document.addEventListener("visibilitychange", handleVisibilityChange);
   });
   
   onBeforeUnmount(() => {

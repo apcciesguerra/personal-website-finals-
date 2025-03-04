@@ -32,7 +32,8 @@
 </template>
 
 <script setup lang="ts">
-import { cn } from "@/lib/utils";
+import { defineProps, withDefaults } from 'vue';
+import { cn } from "../../lib/utils";
 
 interface AuroraBackgroundProps {
   radialGradient?: boolean;
@@ -43,6 +44,19 @@ const props = withDefaults(defineProps<AuroraBackgroundProps>(), {
   radialGradient: true,
 });
 </script>
+
+<style>
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --transparent: transparent;
+  --blue-300: #93c5fd;
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --indigo-300: #a5b4fc;
+  --violet-200: #ddd6fe;
+}
+</style>
 
 <style scoped>
 .aurora-background-gradient-after {

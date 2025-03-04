@@ -22,6 +22,9 @@ export default {
     }
   },
   mounted() {
+    // Ensure we're at the top of the page
+    window.scrollTo(0, 0);
+    
     this.setupTracingBeam();
     window.addEventListener('scroll', this.handleScroll);
     
